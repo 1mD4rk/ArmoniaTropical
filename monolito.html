@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecoposada Turística “Armonía Tropical”</title>
+
+    <!-- 
+        CONFIGURACIÓN DE ESTILOS Y FUENTES EXTERNAS
+        1. Tailwind CSS CDN: Carga el framework utilitario para el diseño responsivo y la maquetación.
+        2. Google Fonts: Importa las tipografías "Inter" (para texto de cuerpo) y "Playfair Display" (para títulos elegantes).
+    -->
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- 
+        EXTENSIÓN DE CONFIGURACIÓN DE TAILWIND CSS
+        Define los nombres de las familias tipográficas personalizadas (sans y serif) para usarlas directamente en las clases de Tailwind.
+    -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-stone-50 text-stone-800 font-sans antialiased selection:bg-amber-100 selection:text-amber-900">
+
+    <!-- 
+        BARRA DE NAVEGACIÓN SUPERIOR (NAVBAR)
+        - 'fixed top-0 left-0 w-full': Se mantiene fija en la parte superior al hacer scroll.
+        - 'backdrop-blur-md': Aplica un ligero efecto de vidrio traslúcido.
+        - Contiene el logotipo/nombre de la marca y enlaces de acceso rápido a las secciones de la página.
+    -->
+    <nav class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md border-b border-stone-200/60 z-50">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="text-2xl font-serif font-bold text-amber-900 tracking-tight">Armonía Tropical</a>
+            
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-stone-600">
+                <a href="#inicio" class="hover:text-amber-800 transition-colors">Inicio</a>
+                <a href="#nosotros" class="hover:text-amber-800 transition-colors">Misión y Visión</a>
+                <a href="#valores" class="hover:text-amber-800 transition-colors">Valores</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 
+        SECCIÓN PRESENTACIÓN PRINCIPAL
+        - 'min-h-[75vh]': Ocupa el 75% de la altura de la pantalla.
+        - Capa de imagen de fondo ('absolute inset-0') con opacidad reducida y superposición de degradado oscuro para garantizar legibilidad del texto.
+        - Contiene el mensaje de bienvenida y la promesa de valor de la posada.
+    -->
+    <section id="inicio" class="relative min-h-[75vh] flex items-center justify-center pt-20 bg-stone-900 text-white overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center opacity-35 scale-105" style="background-image: url('https://i.ibb.co/B2ZQj6Dy/Whats-App-Image-2026-11-02-at-8-50-18-AM.jpg');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/40 to-transparent"></div>
+
+        <div class="relative max-w-4xl mx-auto text-center px-6 py-16">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-bold mb-6 leading-tight">Un espacio diseñado para tu descanso y paz</h1>
+            <p class="text-lg md:text-xl text-stone-300 max-w-2xl mx-auto leading-relaxed font-light">
+                Bienvenido a un refugio donde la hospitalidad tradicional se encuentra con el confort y la serenidad de la naturaleza.
+            </p>
+        </div>
+    </section>
+
+    <!-- 
+        SECCIÓN DE IDENTIDAD INSTITUCIONAL: MISIÓN Y VISIÓN
+        - Maquetación en cuadrícula de 2 columnas ('grid-cols-1 md:grid-cols-2') para mostrar las tarjetas lado a lado en pantallas medianas/grandes.
+        - Incluye tarjetas con borde suave, iconos en SVG y tipografía estilizada.
+    -->
+    <section id="nosotros" class="py-24 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-4">¿Quiénes Somos?</h2>
+            <div class="w-16 h-1 bg-amber-700 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+            <!-- Tarjeta 1: Misión -->
+            <div class="bg-white p-10 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <!-- Icono indicativo de Misión (Rayo/Propósito) -->
+                    <div class="w-14 h-14 bg-amber-100/80 text-amber-900 rounded-xl flex items-center justify-center mb-8">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-stone-900 mb-4">Nuestra Misión</h3>
+                    <p class="text-stone-600 leading-relaxed font-light">
+                        En nuestra <b>Ecoposada</b> brindamos un servicio de hospedaje inmersivo con altos estándares de calidad, calidez y sostenibilidad, integrando la riqueza natural de la costa con el patrimonio cultural de Naiguatá para crear experiencias memorables en nuestros visitantes, al tiempo que impulsamos el empleo local y el desarrollo sostenible de nuestros cultores y artesanos”.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2: Visión -->
+            <div class="bg-white p-10 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <!-- Icono indicativo de Visión (Ojo/Proyección) -->
+                    <div class="w-14 h-14 bg-amber-100/80 text-amber-900 rounded-xl flex items-center justify-center mb-8">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-stone-900 mb-4">Nuestra Visión</h3>
+                    <p class="text-stone-600 leading-relaxed font-light">
+                        “Ser la ecoposada líder en turismo biocultural de La Guaira, reconocida por la excelencia en la atención al cliente, la efectividad de su modelo de gestión sostenible, el compromiso con la salvaguarda de las tradiciones e identidad de Naiguatá y su impacto positivo en el desarrollo socioeconómico de la comunidad”.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 
+        SECCIÓN DE VALORES INSTITUCIONALES
+        Estructura organizada en dos bloques principales:
+        - Bloque 1: Una cuadrícula de 3 columnas ('grid-cols-1 md:grid-cols-3') para los primeros tres valores.
+        - Bloque 2: Un contenedor flex ('flex-col md:flex-row justify-center') para centrar los dos valores restantes en la segunda fila.
+    -->
+    <section id="valores" class="py-20 bg-stone-100/80 border-y border-stone-200/60 px-6">
+        <div class="max-w-6xl mx-auto">
+
+            <!-- Título de la sección -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-serif font-bold text-stone-900 mb-3">Nuestros Valores</h2>
+            </div>
+
+            <!-- FILA 1: 3 VALORES (Excelencia, Conciencia Ambiental e Identidad Cultural) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+
+                <!-- Valor 1 -->
+                <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-800 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">❤</div>
+                    <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Excelencia en el Servicio</h4>
+                    <p class="text-stone-600 text-sm font-light leading-relaxed">Tratamos a cada visitante con la empatía, atención y calidez de un invitado en nuestro propio hogar.</p>
+                </div>
+
+                <!-- Valor 2 -->
+                <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-800 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">🌿</div>
+                    <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Conciencia Ambiental</h4>
+                    <p class="text-stone-600 text-sm font-light leading-relaxed">Operar en coherencia con la naturaleza costera de Naiguatá, aplicando prácticas responsables de uso eficiente de recursos, gestión de residuos y protección de la biodiversidad marina y de la cordillera.</p>
+                </div>
+
+                <!-- Valor 3 -->
+                <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-800 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">📔</div>
+                    <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Identidad y Salvaguarda Cultural</h4>
+                    <p class="text-stone-600 text-sm font-light leading-relaxed">Honrar y visibilizar el patrimonio material e inmaterial de Naiguatá, sirviendo como vitrina permanente para las expresiones tradicionales, la historia local y la creación de nuestros cultores y artesanos.</p>
+                </div>
+            </div>
+
+            <!-- FILA 2: 2 VALORES CENTRADOS (Compromiso Comunitario y Autenticidad) -->
+            <div class="flex flex-col md:flex-row justify-center gap-8">
+
+                <!-- Valor 4 -->
+                <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center md:w-1/3">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-800 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">🤝</div>
+                    <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Compromiso Comunitario</h4>
+                    <p class="text-stone-600 text-sm font-light leading-relaxed">Impulsar el desarrollo socioeconómico de la zona mediante la generación de empleo directo digno, el encadenamiento productivo local y el apoyo continuo a las iniciativas de los pobladores.</p>
+                </div>
+
+                <!-- Valor 5 -->
+                <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center md:w-1/3">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-800 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">❗</div>
+                    <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Autenticidad</h4>
+                    <p class="text-stone-600 text-sm font-light leading-relaxed">Ofrecer vivencias turísticas genuinas y transparentes, basadas en la conexión real con la comunidad, el entorno natural y la riqueza humana del territorio.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 
+        PIE DE PÁGINA (FOOTER)
+        - Fondo oscuro ('bg-stone-900') con datos de la empresa, dirección local y copyright.
+    -->
+    <footer class="bg-stone-900 text-stone-400 py-12 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 border-b border-stone-800 pb-8 mb-8">
+            <div>
+                <h3 class="text-white font-serif text-xl font-bold">Ecoposada Turística “Armonía Tropical”</h3>
+                <p class="text-sm font-light mt-1">El espacio perfecto para reencontrarse con la calma.</p>
+            </div>
+            <div class="text-sm font-light text-center md:text-right">
+                <p>📍 Sector El Valle, Calle Principal</p>
+                <p class="mt-1">📞 +58 (412) 000-0000</p>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto text-center text-xs font-light">
+            <p>&copy; Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- 
+        BOTÓN FLOTANTE DE WHATSAPP (COMENTADO / OPCIONAL)
+        Permite redirigir a los clientes a un chat de WhatsApp directamente.
+    -->
+    <!-- <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20mas%20informacion%20de%20la%20posada" 
+       target="_blank" 
+       class="fixed bottom-6 right-6 bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center transition-transform hover:scale-105"
+       aria-label="Contactar por WhatsApp">
+        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+        </svg>
+    </a> -->
+
+</body>
+</html>
