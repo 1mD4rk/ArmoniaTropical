@@ -2,14 +2,10 @@
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/Q39Y12ZR/tropical-Photoroom-1.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecoposada Turística “Armonía Tropical”</title>
 
-    <!-- 
-        CONFIGURACIÓN DE ESTILOS Y FUENTES EXTERNAS
-        1. Tailwind CSS CDN: Carga el framework utilitario para el diseño responsivo y la maquetación.
-        2. Google Fonts: Importa las tipografías "Inter" (para texto de cuerpo) y "Playfair Display" (para títulos elegantes).
-    -->
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -17,10 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-    <!-- 
-        EXTENSIÓN DE CONFIGURACIÓN DE TAILWIND CSS
-        Define los nombres de las familias tipográficas personalizadas (sans y serif) para usarlas directamente en las clases de Tailwind.
-    -->
     <script>
         tailwind.config = {
             theme: {
@@ -28,162 +20,448 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        /* Verde del logo (antes amber) */
+                        amber: {
+                            50:  '#f0f8f1',
+                            100: '#dcefdd',
+                            200: '#b8ddba',
+                            300: '#8ec792',
+                            400: '#62ac69',
+                            500: '#3f8f4a',
+                            600: '#2f7d3b',
+                            700: '#256330',
+                            800: '#1c4d26',
+                            900: '#143a1d',
+                        },
+                        /* Crema / arena (antes stone) */
+                        stone: {
+                            50:  '#faf8f4',
+                            100: '#f3ede1',
+                            200: '#e8dcc4',
+                            300: '#dcc9a6',
+                            400: '#cfb688',
+                            500: '#b6a48d',
+                            600: '#4a5a4d',
+                            700: '#3a4a3d',
+                            800: '#2a3a2c',
+                            900: '#0f2d18',
+                        },
+                        /* Azul olas del logo */
+                        oceano: {
+                            50:  '#eff6fb',
+                            100: '#d8e9f5',
+                            200: '#b0d3ea',
+                            300: '#7fb6dc',
+                            400: '#4f98cd',
+                            500: '#2c7fb8',
+                            600: '#1f6699',
+                            700: '#1a527a',
+                            800: '#163f5e',
+                            900: '#112f46',
+                        },
+                        /* Amarillo sol del logo */
+                        sol: {
+                            50:  '#fefbe8',
+                            100: '#fdf0c8',
+                            200: '#fbe08c',
+                            300: '#f6c94a',
+                            400: '#f2b21a',
+                            500: '#d99a0a',
+                            600: '#a67c00',
+                            700: '#7a5a00',
+                        },
                     }
                 }
             }
         }
     </script>
+
+    <style>
+        /* --- Botones de pestaña --- */
+        .tab-btn {
+            display: inline-block;
+            padding: 0.5rem 0.95rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #4a5a4d;
+            line-height: 1.25rem;
+            transition: background-color .2s ease, color .2s ease;
+        }
+        .tab-btn:hover {
+            background-color: #eef6ee;
+            color: #143a1d;
+        }
+        .tab-btn.tab-active {
+            background-color: #256330;
+            color: #ffffff;
+        }
+        .tab-btn.tab-active:hover {
+            background-color: #256330;
+            color: #ffffff;
+        }
+
+        /* Ocultar scrollbar del carrusel */
+        #specialCarousel::-webkit-scrollbar { display: none; }
+
+        /* Pequeño fade al cambiar de pestaña */
+        .tab-panel {
+            animation: fadeIn .35s ease both;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .tab-panel { animation: none; }
+        }
+    </style>
 </head>
 
 <body class="bg-stone-50 text-stone-800 font-sans antialiased selection:bg-amber-100 selection:text-amber-900">
 
     <!-- 
-        BARRA DE NAVEGACIÓN SUPERIOR (NAVBAR)
-        - 'fixed top-0 left-0 w-full': Se mantiene fija en la parte superior al hacer scroll.
-        - 'backdrop-blur-md': Aplica un ligero efecto de vidrio traslúcido.
-        - Contiene el logotipo/nombre de la marca y enlaces de acceso rápido a las secciones de la página.
+        BARRA DE NAVEGACIÓN SUPERIOR
     -->
     <nav class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md border-b border-stone-200/60 z-50">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="text-2xl font-serif font-bold text-amber-900 tracking-tight">Armonía Tropical</a>
-            
-            <div class="hidden md:flex space-x-8 text-sm font-medium text-stone-600">
-                <a href="#inicio" class="hover:text-amber-800 transition-colors">Inicio</a>
-                <a href="#nosotros" class="hover:text-amber-800 transition-colors">Misión y Visión</a>
-                <a href="#valores" class="hover:text-amber-800 transition-colors">Valores</a>
+
+            <!-- Logo + nombre -->
+            <a href="#" onclick="showTab('inicio'); return false;" class="flex items-center gap-3 shrink-0">
+                <img src="https://i.ibb.co/Q39Y12ZR/tropical-Photoroom-1.png"
+                    alt="Logo Ecoposada Armonía Tropical"
+                    class="h-12 w-auto object-contain">
+                <span class="hidden sm:inline text-2xl font-serif font-bold text-amber-900 tracking-tight">
+                    Armonía Tropical
+                </span>
+            </a>
+
+            <!-- Navegación escritorio -->
+            <div class="hidden md:flex items-center gap-1">
+                <button class="tab-btn" data-tab="inicio" data-anchor="">Inicio</button>
+                <button class="tab-btn" data-tab="inicio" data-anchor="nosotros">Misión y Visión</button>
+                <button class="tab-btn" data-tab="inicio" data-anchor="valores">Valores</button>
+                <button class="tab-btn" data-tab="paquetes" data-anchor="">Paquetes</button>
+            </div>
+
+            <!-- Botón menú móvil -->
+            <button id="menuBtn" class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg border border-stone-300 text-stone-700 hover:bg-stone-100 transition-colors" aria-label="Abrir menú" aria-expanded="false">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menú móvil -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-stone-200/60 bg-white px-6 py-4">
+            <div class="flex flex-col gap-1">
+                <button class="tab-btn text-left" data-tab="inicio" data-anchor="">Inicio</button>
+                <button class="tab-btn text-left" data-tab="inicio" data-anchor="nosotros">Misión y Visión</button>
+                <button class="tab-btn text-left" data-tab="inicio" data-anchor="valores">Valores</button>
+                <button class="tab-btn text-left" data-tab="paquetes" data-anchor="">Paquetes</button>
             </div>
         </div>
     </nav>
 
-    <!-- 
-        SECCIÓN PRESENTACIÓN PRINCIPAL
-        - 'min-h-[75vh]': Ocupa el 75% de la altura de la pantalla.
-        - Capa de imagen de fondo ('absolute inset-0') con opacidad reducida y superposición de degradado oscuro para garantizar legibilidad del texto.
-        - Contiene el mensaje de bienvenida y la promesa de valor de la posada.
-    -->
-    <section id="inicio" class="relative min-h-[75vh] flex items-center justify-center pt-20 bg-stone-900 text-white overflow-hidden">
-        <div class="absolute inset-0 bg-cover bg-center opacity-35 scale-105" style="background-image: url('https://i.ibb.co/B2ZQj6Dy/Whats-App-Image-2026-11-02-at-8-50-18-AM.jpg');"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/40 to-transparent"></div>
+    <!-- ============================================================
+         PESTAÑA 1: INICIO (Presentación, Misión/Visión y Valores)
+    ============================================================= -->
+    <div id="tab-inicio" class="tab-panel">
 
-        <div class="relative max-w-4xl mx-auto text-center px-6 py-16">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-bold mb-6 leading-tight">Un espacio diseñado para tu descanso y paz</h1>
-            <p class="text-lg md:text-xl text-stone-300 max-w-2xl mx-auto leading-relaxed font-light">
-                Bienvenido a un refugio donde la hospitalidad tradicional se encuentra con el confort y la serenidad de la naturaleza.
-            </p>
-        </div>
-    </section>
+        <!-- 
+            SECCIÓN PRESENTACIÓN PRINCIPAL
+        -->
+        <section id="inicio" class="relative min-h-[75vh] flex items-center justify-center pt-20 bg-stone-900 text-white overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center opacity-35 scale-105" style="background-image: url('https://i.ibb.co/B2ZQj6Dy/Whats-App-Image-2026-11-02-at-8-50-18-AM.jpg');"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/40 to-transparent"></div>
 
-    <!-- 
-        SECCIÓN DE IDENTIDAD INSTITUCIONAL: MISIÓN Y VISIÓN
-        - Maquetación en cuadrícula de 2 columnas ('grid-cols-1 md:grid-cols-2') para mostrar las tarjetas lado a lado en pantallas medianas/grandes.
-        - Incluye tarjetas con borde suave, iconos en SVG y tipografía estilizada.
-    -->
-    <section id="nosotros" class="py-24 px-6 max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-4">¿Quiénes Somos?</h2>
-            <div class="w-16 h-1 bg-amber-700 mx-auto rounded-full"></div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-
-            <!-- Tarjeta 1: Misión -->
-            <div class="bg-white p-10 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-                <div>
-                    <!-- Icono indicativo de Misión (Rayo/Propósito) -->
-                    <div class="w-14 h-14 bg-amber-100/80 text-amber-900 rounded-xl flex items-center justify-center mb-8">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-serif font-bold text-stone-900 mb-4">Nuestra Misión</h3>
-                    <p class="text-stone-600 leading-relaxed font-light">
-                        En nuestra <b>Ecoposada</b> brindamos un servicio de hospedaje inmersivo con altos estándares de calidad, calidez y sostenibilidad, integrando la riqueza natural de la costa con el patrimonio cultural de Naiguatá para crear experiencias memorables en nuestros visitantes, al tiempo que impulsamos el empleo local y el desarrollo sostenible de nuestros cultores y artesanos”.
-                    </p>
-                </div>
+            <div class="relative max-w-4xl mx-auto text-center px-6 py-16">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-bold mb-6 leading-tight">Un espacio diseñado para tu descanso y paz</h1>
+                <p class="text-lg md:text-xl text-stone-300 max-w-2xl mx-auto leading-relaxed font-light">
+                    Bienvenido a un refugio donde la hospitalidad tradicional se encuentra con el confort y la serenidad de la naturaleza.
+                </p>
             </div>
+        </section>
 
-            <!-- Tarjeta 2: Visión -->
-            <div class="bg-white p-10 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-                <div>
-                    <!-- Icono indicativo de Visión (Ojo/Proyección) -->
-                    <div class="w-14 h-14 bg-amber-100/80 text-amber-900 rounded-xl flex items-center justify-center mb-8">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-serif font-bold text-stone-900 mb-4">Nuestra Visión</h3>
-                    <p class="text-stone-600 leading-relaxed font-light">
-                        “Ser la ecoposada líder en turismo biocultural de La Guaira, reconocida por la excelencia en la atención al cliente, la efectividad de su modelo de gestión sostenible, el compromiso con la salvaguarda de las tradiciones e identidad de Naiguatá y su impacto positivo en el desarrollo socioeconómico de la comunidad”.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 
-        SECCIÓN DE VALORES INSTITUCIONALES
-        Estructura organizada en dos bloques principales:
-        - Bloque 1: Una cuadrícula de 3 columnas ('grid-cols-1 md:grid-cols-3') para los primeros tres valores.
-        - Bloque 2: Un contenedor flex ('flex-col md:flex-row justify-center') para centrar los dos valores restantes en la segunda fila.
-    -->
-    <section id="valores" class="py-20 bg-stone-100/80 border-y border-stone-200/60 px-6">
-        <div class="max-w-6xl mx-auto">
-
-            <!-- Título de la sección -->
+        <!-- 
+            SECCIÓN DE IDENTIDAD INSTITUCIONAL: MISIÓN Y VISIÓN
+        -->
+        <section id="nosotros" class="py-24 px-6 max-w-6xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-serif font-bold text-stone-900 mb-3">Nuestros Valores</h2>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-4">¿Quiénes Somos?</h2>
+                <!-- Degradado verde → azul → amarillo (paleta del logo) -->
+                <div class="w-20 h-1.5 mx-auto rounded-full bg-gradient-to-r from-amber-700 via-oceano-500 to-sol-400"></div>
             </div>
 
-            <!-- FILA 1: 3 VALORES (Excelencia, Conciencia Ambiental e Identidad Cultural) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-
-                <!-- Valor 1 -->
-                <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center">
-                    <div class="w-12 h-12 bg-amber-50 text-amber-800 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">❤</div>
-                    <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Excelencia en el Servicio</h4>
-                    <p class="text-stone-600 text-sm font-light leading-relaxed">Tratamos a cada visitante con la empatía, atención y calidez de un invitado en nuestro propio hogar.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- Misión -->
+                <div class="bg-white p-10 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-amber-100/80 text-amber-800 rounded-xl flex items-center justify-center mb-8">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-stone-900 mb-4">Nuestra Misión</h3>
+                        <p class="text-stone-600 leading-relaxed font-light">
+                            En nuestra <b>Ecoposada</b> brindamos un servicio de hospedaje inmersivo con altos estándares de calidad, calidez y sostenibilidad, integrando la riqueza natural de la costa con el patrimonio cultural de Naiguatá para crear experiencias memorables en nuestros visitantes, al tiempo que impulsamos el empleo local y el desarrollo sostenible de nuestros cultores y artesanos.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Valor 2 -->
-                <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center">
-                    <div class="w-12 h-12 bg-amber-50 text-amber-800 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">🌿</div>
-                    <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Conciencia Ambiental</h4>
-                    <p class="text-stone-600 text-sm font-light leading-relaxed">Operar en coherencia con la naturaleza costera de Naiguatá, aplicando prácticas responsables de uso eficiente de recursos, gestión de residuos y protección de la biodiversidad marina y de la cordillera.</p>
+                <!-- Visión -->
+                <div class="bg-white p-10 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-oceano-100 text-oceano-600 rounded-xl flex items-center justify-center mb-8">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-stone-900 mb-4">Nuestra Visión</h3>
+                        <p class="text-stone-600 leading-relaxed font-light">
+                            Ser la ecoposada líder en turismo biocultural de La Guaira, reconocida por la excelencia en la atención al cliente, la efectividad de su modelo de gestión sostenible, el compromiso con la salvaguarda de las tradiciones e identidad de Naiguatá y su impacto positivo en el desarrollo socioeconómico de la comunidad.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+            SECCIÓN DE VALORES INSTITUCIONALES
+            (cada icono usa un color distinto del logo)
+        -->
+        <section id="valores" class="py-20 bg-stone-100/80 border-y border-stone-200/60 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-serif font-bold text-stone-900 mb-3">Nuestros Valores</h2>
                 </div>
 
-                <!-- Valor 3 -->
-                <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center">
-                    <div class="w-12 h-12 bg-amber-50 text-amber-800 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">📔</div>
-                    <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Identidad y Salvaguarda Cultural</h4>
-                    <p class="text-stone-600 text-sm font-light leading-relaxed">Honrar y visibilizar el patrimonio material e inmaterial de Naiguatá, sirviendo como vitrina permanente para las expresiones tradicionales, la historia local y la creación de nuestros cultores y artesanos.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                    <!-- Verde: excelencia -->
+                    <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center">
+                        <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">❤</div>
+                        <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Excelencia en el Servicio</h4>
+                        <p class="text-stone-600 text-sm font-light leading-relaxed">Tratamos a cada visitante con la empatía, atención y calidez de un invitado en nuestro propio hogar.</p>
+                    </div>
+
+                    <!-- Azul: conciencia ambiental (olas) -->
+                    <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center">
+                        <div class="w-12 h-12 bg-oceano-100 text-oceano-600 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">🌿</div>
+                        <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Conciencia Ambiental</h4>
+                        <p class="text-stone-600 text-sm font-light leading-relaxed">Operar en coherencia con la naturaleza costera de Naiguatá, aplicando prácticas responsables de uso eficiente de recursos.</p>
+                    </div>
+
+                    <!-- Amarillo: identidad cultural (sol) -->
+                    <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center">
+                        <div class="w-12 h-12 bg-sol-100 text-sol-600 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">📔</div>
+                        <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Identidad Cultural</h4>
+                        <p class="text-stone-600 text-sm font-light leading-relaxed">Honrar y visibilizar el patrimonio material e inmaterial de Naiguatá, sirviendo como vitrina permanente para las expresiones tradicionales.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-center gap-8">
+                    <!-- Arena: compromiso comunitario -->
+                    <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center md:w-1/3">
+                        <div class="w-12 h-12 bg-stone-100 text-stone-500 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">🤝</div>
+                        <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Compromiso Comunitario</h4>
+                        <p class="text-stone-600 text-sm font-light leading-relaxed">Impulsar el desarrollo socioeconómico de la zona mediante la generación de empleo directo digno y apoyo a pobladores.</p>
+                    </div>
+
+                    <!-- Verde oscuro: autenticidad -->
+                    <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center md:w-1/3">
+                        <div class="w-12 h-12 bg-amber-800 text-amber-50 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">❗</div>
+                        <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Autenticidad</h4>
+                        <p class="text-stone-600 text-sm font-light leading-relaxed">Ofrecer vivencias turísticas genuinas y transparentes, basadas en la conexión real con la comunidad y el entorno natural.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div><!-- /tab-inicio -->
+
+
+    <!-- ============================================================
+         PESTAÑA 2: PAQUETES Y EXPERIENCIAS
+    ============================================================= -->
+    <div id="tab-paquetes" class="tab-panel hidden">
+
+        <section id="paquetes" class="pt-28 pb-24 px-6 max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-amber-700 font-semibold uppercase tracking-widest text-xs mb-2 block">Vivir Naiguatá</span>
+                <h1 class="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-4">Catálogo de Paquetes y Experiencias</h1>
+                <div class="w-20 h-1.5 mx-auto rounded-full bg-gradient-to-r from-amber-700 via-oceano-500 to-sol-400 mb-4"></div>
+                <p class="text-stone-600 max-w-xl mx-auto font-light">Explora nuestras opciones de Day Pass, escapadas de pernocta, experiencias especializadas y de temporada.</p>
+            </div>
+
+            <!-- CATEGORÍA 1: DAY PASS ("VIVE NAIGUATÁ") -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-serif font-bold text-stone-900 mb-6 border-b border-stone-200 pb-2">1. Day Pass (Sin Pernocta - 9:00 a.m. a 5:00 p.m.)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Day Pass 1 -->
+                    <div class="bg-white p-8 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between">
+                        <div>
+                            <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full uppercase">Básico</span>
+                            <h4 class="text-xl font-serif font-bold text-stone-900 mt-3 mb-1">“Descanso Costero”</h4>
+                            <p class="text-amber-700 font-semibold mb-3 text-sm">$10 USD / persona</p>
+                            <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">
+                                Guarapa de bienvenida, zonas de chinchorros, biblioteca de mitología local, Wi-Fi y entrada al Rincón del Artesano.
+                            </p>
+                        </div>
+                        <a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20el%20Day%20Pass%20Descanso%20Costero" target="_blank" class="w-full text-center bg-stone-900 hover:bg-amber-900 text-white py-2.5 rounded-xl text-sm font-medium transition-colors">
+                            Consultar
+                        </a>
+                    </div>
+
+                    <!-- Day Pass 2 -->
+                    <div class="bg-white p-8 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between">
+                        <div>
+                            <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full uppercase">Recomendado</span>
+                            <h4 class="text-xl font-serif font-bold text-stone-900 mt-3 mb-1">“Inmersión Cultural”</h4>
+                            <p class="text-amber-700 font-semibold mb-3 text-sm">$15 USD / persona</p>
+                            <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">
+                                Incluye lo del pase básico + taller vivencial (percusión, máscaras o casco histórico) y merienda criolla con café artesanal.
+                            </p>
+                        </div>
+                        <a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20el%20Day%20Pass%20Inmersion%20Cultural" target="_blank" class="w-full text-center bg-amber-700 hover:bg-amber-800 text-white py-2.5 rounded-xl text-sm font-medium transition-colors">
+                            Consultar
+                        </a>
+                    </div>
+
+                    <!-- Day Pass 3 -->
+                    <div class="bg-white p-8 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between">
+                        <div>
+                            <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full uppercase">Gastronómico</span>
+                            <h4 class="text-xl font-serif font-bold text-stone-900 mt-3 mb-1">“Sabor y Ritmo”</h4>
+                            <p class="text-amber-700 font-semibold mb-3 text-sm">$28 USD / persona</p>
+                            <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">
+                                Todo lo anterior + Almuerzo criollo costero (pescado fresco/mariscos con tostones) y cóctel de autor al atardecer en terraza.
+                            </p>
+                        </div>
+                        <a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20el%20Day%20Pass%20Sabor%20y%20Ritmo" target="_blank" class="w-full text-center bg-stone-900 hover:bg-amber-900 text-white py-2.5 rounded-xl text-sm font-medium transition-colors">
+                            Consultar
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <!-- FILA 2: 2 VALORES CENTRADOS (Compromiso Comunitario y Autenticidad) -->
-            <div class="flex flex-col md:flex-row justify-center gap-8">
+            <!-- CATEGORÍA 2: PAQUETES ESTÁNDAR PARA PAREJAS (3D / 2N) -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-serif font-bold text-stone-900 mb-6 border-b border-stone-200 pb-2">2. Paquetes Estándar para Parejas (3 Días / 2 Noches)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Paquete Esencial -->
+                    <div class="bg-white p-8 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between">
+                        <div>
+                            <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full uppercase">Escapada</span>
+                            <h4 class="text-xl font-serif font-bold text-stone-900 mt-3 mb-1">“Escapada Naiguatareña”</h4>
+                            <p class="text-amber-700 font-semibold mb-3 text-sm">$200 - $250 USD / pareja</p>
+                            <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">
+                                Alojamiento en habitación temática, cóctel de bienvenida, desayunos criollos diarios y taller cultural o recorrido por el casco urbano.
+                            </p>
+                        </div>
+                        <a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20el%20paquete%20Escapada%20Naiguatareña" target="_blank" class="w-full text-center bg-amber-700 hover:bg-amber-800 text-white py-2.5 rounded-xl text-sm font-medium transition-colors">
+                            Reservar Escapada
+                        </a>
+                    </div>
 
-                <!-- Valor 4 -->
-                <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center md:w-1/3">
-                    <div class="w-12 h-12 bg-amber-50 text-amber-800 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">🤝</div>
-                    <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Compromiso Comunitario</h4>
-                    <p class="text-stone-600 text-sm font-light leading-relaxed">Impulsar el desarrollo socioeconómico de la zona mediante la generación de empleo directo digno, el encadenamiento productivo local y el apoyo continuo a las iniciativas de los pobladores.</p>
-                </div>
-
-                <!-- Valor 5 -->
-                <div class="bg-white p-8 rounded-xl border border-stone-200/60 text-center md:w-1/3">
-                    <div class="w-12 h-12 bg-amber-50 text-amber-800 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold">❗</div>
-                    <h4 class="font-serif font-bold text-lg text-stone-900 mb-2">Autenticidad</h4>
-                    <p class="text-stone-600 text-sm font-light leading-relaxed">Ofrecer vivencias turísticas genuinas y transparentes, basadas en la conexión real con la comunidad, el entorno natural y la riqueza humana del territorio.</p>
+                    <!-- Paquete Integral -->
+                    <div class="bg-white p-8 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between relative ring-2 ring-amber-700/30">
+                        <div class="absolute -top-3 right-6 bg-amber-700 text-white text-xs font-semibold px-3 py-1 rounded-full">Insignia</div>
+                        <div>
+                            <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full uppercase">Experiencia Completa</span>
+                            <h4 class="text-xl font-serif font-bold text-stone-900 mt-3 mb-1">“Alma de Naiguatá”</h4>
+                            <p class="text-amber-700 font-semibold mb-3 text-sm">$320 - $380 USD / pareja</p>
+                            <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">
+                                Incluye cena temática "Sabores del Tambor", excursión a las pozas del Río Naiguatá con almuerzo picnic y paseo en peñero hacia Punta Care.
+                            </p>
+                        </div>
+                        <a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20el%20paquete%20Alma%20de%20Naiguatá" target="_blank" class="w-full text-center bg-stone-900 hover:bg-amber-900 text-white py-2.5 rounded-xl text-sm font-medium transition-colors">
+                            Reservar Alma de Naiguatá
+                        </a>
+                    </div>
                 </div>
             </div>
 
-        </div>
-    </section>
+            <!-- CATEGORÍA 3: PAQUETES ESPECIALIZADOS (CARRUSEL INTERACTIVO) -->
+            <div class="mb-4">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 border-b border-stone-200 pb-2 gap-4">
+                    <h3 class="text-2xl font-serif font-bold text-stone-900">3. Paquetes Especializados (Fin de Semana y Grupos)</h3>
+                    <!-- Controles de navegación del carrusel (hover azul océano) -->
+                    <div class="flex space-x-2">
+                        <button onclick="document.getElementById('specialCarousel').scrollBy({ left: -320, behavior: 'smooth' })"
+                                class="w-10 h-10 rounded-full border border-stone-300 flex items-center justify-center hover:bg-oceano-600 hover:text-white hover:border-oceano-600 transition-colors"
+                                aria-label="Anterior">
+                            &larr;
+                        </button>
+                        <button onclick="document.getElementById('specialCarousel').scrollBy({ left: 320, behavior: 'smooth' })"
+                                class="w-10 h-10 rounded-full border border-stone-300 flex items-center justify-center hover:bg-oceano-600 hover:text-white hover:border-oceano-600 transition-colors"
+                                aria-label="Siguiente">
+                            &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Contenedor con scroll horizontal (Carrusel) -->
+                <div id="specialCarousel" class="flex overflow-x-auto snap-x snap-mandatory space-x-6 pb-4" style="-ms-overflow-style: none; scrollbar-width: none;">
+
+                    <!-- Romance -->
+                    <div class="min-w-[280px] sm:min-w-[320px] md:min-w-[350px] snap-start bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
+                        <div>
+                            <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full uppercase">Parejas</span>
+                            <h4 class="font-serif font-bold text-xl text-stone-900 mt-3 mb-1">Romance</h4>
+                            <p class="text-amber-700 font-semibold text-sm mb-2">$165 USD / pareja (2D/1N)</p>
+                            <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">Estancia romántica, sonoterapia frente al mar y cena íntima con cata de rones y cacao.</p>
+                        </div>
+                        <a href="https://wa.me/1234567890?text=Hola,%20deseo%20info%20del%20Paquete%20Romance" target="_blank" class="w-full text-center bg-stone-900 hover:bg-amber-900 text-white py-2.5 rounded-xl text-sm font-medium transition-colors">Cotizar por WhatsApp</a>
+                    </div>
+
+                    <!-- Aventura -->
+                    <div class="min-w-[280px] sm:min-w-[320px] md:min-w-[350px] snap-start bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
+                        <div>
+                            <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full uppercase">Ecoturistas</span>
+                            <h4 class="font-serif font-bold text-xl text-stone-900 mt-3 mb-1">Aventura</h4>
+                            <p class="text-amber-700 font-semibold text-sm mb-2">$290 USD / pareja (3D/2N)</p>
+                            <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">Trekking hacia el Pico Naiguatá o Waraira Repano y clínica de surf en la costa.</p>
+                        </div>
+                        <a href="https://wa.me/1234567890?text=Hola,%20deseo%20info%20del%20Paquete%20Aventura" target="_blank" class="w-full text-center bg-stone-900 hover:bg-amber-900 text-white py-2.5 rounded-xl text-sm font-medium transition-colors">Cotizar por WhatsApp</a>
+                    </div>
+
+                    <!-- Familiar -->
+                    <div class="min-w-[280px] sm:min-w-[320px] md:min-w-[350px] snap-start bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
+                        <div>
+                            <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full uppercase">Familias</span>
+                            <h4 class="font-serif font-bold text-xl text-stone-900 mt-3 mb-1">Familiar</h4>
+                            <p class="text-amber-700 font-semibold text-sm mb-2">$420 USD / familia (4 pax)</p>
+                            <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">Talleres culturales intergeneracionales y caminata suave a pozas de agua dulce.</p>
+                        </div>
+                        <a href="https://wa.me/1234567890?text=Hola,%20deseo%20info%20del%20Paquete%20Familiar" target="_blank" class="w-full text-center bg-stone-900 hover:bg-amber-900 text-white py-2.5 rounded-xl text-sm font-medium transition-colors">Cotizar por WhatsApp</a>
+                    </div>
+
+                    <!-- Workation -->
+                    <div class="min-w-[280px] sm:min-w-[320px] md:min-w-[350px] snap-start bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
+                        <div>
+                            <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full uppercase">Remotos</span>
+                            <h4 class="font-serif font-bold text-xl text-stone-900 mt-3 mb-1">Workation</h4>
+                            <p class="text-amber-700 font-semibold text-sm mb-2">$170 USD / persona (4D/3N)</p>
+                            <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">Entre semana (Lun-Jue) con Wi-Fi garantizado, café artesanal y pausas de yoga.</p>
+                        </div>
+                        <a href="https://wa.me/1234567890?text=Hola,%20deseo%20info%20del%20Paquete%20Workation" target="_blank" class="w-full text-center bg-stone-900 hover:bg-amber-900 text-white py-2.5 rounded-xl text-sm font-medium transition-colors">Cotizar por WhatsApp</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div><!-- /tab-paquetes -->
+
+
+    <!-- Firma visual: barra degradada del logo antes del footer -->
+    <div class="h-1.5 bg-gradient-to-r from-amber-700 via-oceano-500 to-sol-400"></div>
 
     <!-- 
-        PIE DE PÁGINA (FOOTER)
-        - Fondo oscuro ('bg-stone-900') con datos de la empresa, dirección local y copyright.
+        PIE DE PÁGINA
     -->
     <footer class="bg-stone-900 text-stone-400 py-12 px-6">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 border-b border-stone-800 pb-8 mb-8">
@@ -192,7 +470,7 @@
                 <p class="text-sm font-light mt-1">El espacio perfecto para reencontrarse con la calma.</p>
             </div>
             <div class="text-sm font-light text-center md:text-right">
-                <p>📍 Sector El Valle, Calle Principal</p>
+                <p>📍 Sector El Valle, Calle Principal, Naiguatá</p>
                 <p class="mt-1">📞 +58 (412) 000-0000</p>
             </div>
         </div>
@@ -202,17 +480,88 @@
     </footer>
 
     <!-- 
-        BOTÓN FLOTANTE DE WHATSAPP (COMENTADO / OPCIONAL)
-        Permite redirigir a los clientes a un chat de WhatsApp directamente.
+        LÓGICA DE PESTAÑAS
     -->
-    <!-- <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20mas%20informacion%20de%20la%20posada" 
-       target="_blank" 
-       class="fixed bottom-6 right-6 bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center transition-transform hover:scale-105"
-       aria-label="Contactar por WhatsApp">
-        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
-        </svg>
-    </a> -->
+    <script>
+        const NAV_OFFSET = 92; // altura de la barra fija + margen
+
+        /* --- Menú móvil --- */
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+
+        menuBtn.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            if (isOpen) {
+                closeMenu();
+            } else {
+                mobileMenu.classList.remove('hidden');
+                menuBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+        /* --- Scroll suave a un ancla dentro de la pestaña activa --- */
+        function scrollToAnchor(anchor, smooth = true) {
+            const el = document.getElementById(anchor);
+            if (!el) return;
+            const y = el.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
+            window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' });
+        }
+
+        /* --- Marcar botones activos --- */
+        function setActiveButtons(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('tab-active', btn.dataset.tab === tab);
+            });
+        }
+
+        /* --- Mostrar una pestaña --- */
+        function showTab(tab, anchor, smooth = true) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+
+            // Mostrar la solicitada
+            const panel = document.getElementById('tab-' + tab);
+            if (panel) panel.classList.remove('hidden');
+
+            setActiveButtons(tab);
+            closeMenu();
+
+            if (anchor) {
+                // Esperar un frame para que el layout esté listo
+                requestAnimationFrame(() => scrollToAnchor(anchor, smooth));
+            } else {
+                window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+            }
+
+            // Actualizar la URL sin recargar
+            history.replaceState(null, '', anchor ? '#' + anchor : '#' + tab);
+        }
+
+        /* --- Listeners de los botones --- */
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                showTab(btn.dataset.tab, btn.dataset.anchor || '');
+            });
+        });
+
+        /* --- Estado inicial según el hash de la URL --- */
+        (function initTabs() {
+            const hash = window.location.hash.replace('#', '');
+
+            if (hash === 'paquetes') {
+                showTab('paquetes', null, false);
+            } else if (hash === 'nosotros' || hash === 'valores' || hash === 'inicio') {
+                showTab('inicio', hash === 'inicio' ? null : hash, false);
+            } else {
+                showTab('inicio', null, false);
+            }
+        })();
+    </script>
 
 </body>
 </html>
